@@ -1,5 +1,5 @@
 const Sentry = require('@sentry/node')
-Sentry.init({dsn: process.env.SENTRY_DSN})
+Sentry.init({ dsn: process.env.SENTRY_DSN })
 
 const { Telegraf } = require('telegraf')
 const RedisSession = require('telegraf-session-redis')
