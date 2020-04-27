@@ -1,0 +1,31 @@
+{
+  "name": "telegram",
+  "version": "1.0.0",
+  "description": "Telegram Bot For Generating Musicorum Images",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musicorum-app/telegram.git"
+  },
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/musicorum-app/telegram/issues"
+  },
+  "homepage": "https://github.com/musicorum-app/telegram#readme",
+  "dependencies": {
+    "@sentry/node": "^5.15.5",
+    "node-fetch": "^2.6.0",
+    "telegraf": "^3.38.0",
+    "telegraf-inline-menu": "^4.0.1",
+    "telegraf-session-redis": "^5.1.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "dot-env": "0.0.1",
+    "standard": "^14.3.3"
+  }
+}

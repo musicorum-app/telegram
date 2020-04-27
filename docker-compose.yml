@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  bot:
+    build: .
+    image: telegram:latest
+    depends_on:
+      - redis
+    env_file: .env
+  redis:
+    image: redis
