@@ -8,6 +8,7 @@ import {connectDatabase} from "./database/driver";
 import setUser from "./commands/setUser";
 import setUserScene from "./scenes/setUser";
 import generate from "./commands/generate";
+import presetCommand from "./commands/presetCommand";
 
 // Scenes
 const stage = new Stage([userSetupScene.scene, setUserScene.scene])
@@ -26,7 +27,9 @@ async function initiate() {
   // @ts-ignore
   bot.command('setuser', setUser)
   // @ts-ignore
-    bot.command('generate', generate)
+  bot.command('generate', generate)
+  // @ts-ignore
+  bot.command('preset', presetCommand)
 
   bot.launch()
 }

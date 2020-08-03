@@ -1,8 +1,9 @@
-import {DatabaseUser, Nullable} from "../types";
+import {DatabaseUser, Nullable, PresetDocument} from "../types";
 import User from "./schemas/User";
 import winston from "winston";
 import {connect} from "mongoose";
 import logger from "../utils/logger";
+import Preset from "./schemas/Preset";
 
 export async function connectDatabase() {
   logger.info('Connecting to the database...')
@@ -17,9 +18,7 @@ export async function connectDatabase() {
 }
 
 export async function findUser(telegramId: string): Promise<Nullable<DatabaseUser>> {
-  const result = await User.findOne({telegram: telegramId})
-  if (!result) return null
-  else return result
+  return User.findOne({telegram: telegramId})
 }
 
 export async function defineUser(telegramId: string, lastfmUser: string): Promise<void> {
@@ -34,4 +33,8 @@ export async function defineUser(telegramId: string, lastfmUser: string): Promis
     })
     await doc.save()
   }
+}
+
+export async function getPreset(code: string): Promise<Nullable<PresetDocument>> {
+  return Preset.findOne({code})
 }
