@@ -34,6 +34,7 @@
   "homepage": "https://github.com/musicorum-app/telegram#readme",
   "dependencies": {
     "@sentry/node": "^5.20.1",
+    "@types/mongoose": "^5.7.34",
     "@types/node-fetch": "^2.5.7",
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.27",
