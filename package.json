@@ -38,7 +38,7 @@
     "@types/node-fetch": "^2.5.7",
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.27",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "telegraf": "^3.38.0",
     "telegraf-inline-menu": "^4.0.1",
     "winston": "^3.2.1"
