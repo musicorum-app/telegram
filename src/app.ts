@@ -1,37 +1,11 @@
-import {session, Stage, Telegraf} from 'telegraf'
-// import Sentry from '@sentry/node'
-
-// Commands
+import { Telegraf } from 'telegraf'
+import link from './commands/link'
 import start from './commands/start'
-import userSetupScene from "./scenes/userSetup";
-import {connectDatabase} from "./database/driver";
-import setUser from "./commands/setUser";
-import setUserScene from "./scenes/setUser";
-import generate from "./commands/generate";
-import presetCommand from "./commands/presetCommand";
 
-// Scenes
-const stage = new Stage([userSetupScene.scene, setUserScene.scene])
+const bot = new Telegraf("1958059395:AAFAAwc6wJ94J6PpsKSTuGy-d85IzgKFcsE")
 
-// Sentry.init({ dsn: process.env.SENTRY_DSN })
-async function initiate() {
-  await connectDatabase()
-  const bot = new Telegraf(process.env.BOT_TOKEN!)
-  bot.use(session())
-  // @ts-ignore
-  bot.use(stage.middleware())
+bot.start(ctx => start(ctx))
 
-  // Commands
-  // @ts-ignore
-  bot.start(start)
-  // @ts-ignore
-  bot.command('setuser', setUser)
-  // @ts-ignore
-  bot.command('generate', generate)
-  // @ts-ignore
-  bot.command('preset', presetCommand)
+bot.command("link", (ctx) => link(ctx))
 
-  bot.launch()
-}
-
-initiate()
+bot.launch().then(() => console.log("Bot running"))
