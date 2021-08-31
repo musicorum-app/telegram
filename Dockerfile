@@ -1,7 +1,7 @@
 FROM node:12 AS builder
 WORKDIR /src
 COPY package*.json ./
-RUN npm ci
+RUN npm i
 COPY . .
 RUN npm prune --production
 RUN npm run build
@@ -9,6 +9,7 @@ RUN /usr/local/bin/node-prune
 
 FROM node:12-alpine
 WORKDIR /app
-COPY --from=builder /src .
+COPY --from=builder /src/dist /app/dist
+RUN npm ci
 EXPOSE 80
 CMD [ "npm", "start" ]
