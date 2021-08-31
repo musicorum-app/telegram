@@ -1,55 +1,49 @@
 {
-  "name": "telegram",
+  "name": "musicorum-telegram-bot",
   "version": "1.0.0",
-  "description": "Telegram Bot For Generating Musicorum Images",
-  "main": "src/index.js",
+  "description": "",
+  "main": "dist/index.js",
+  "author": "Musicorum Team",
+  "contributors": [
+    "Matheus Dias <methidezeeni@gmail.com>",
+    "Pedro Piva"
+  ],
+  "license": "GPL-3.0",
   "scripts": {
-    "start": "node -r dotenv/config -r ts-node/register src/app.ts",
-    "dev": "nodemon",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "babel-node -r dotenv/config src/index.js",
+    "clean": "rm -rf ./dist && mkdir dist",
+    "build": "npm run clean && babel src -d dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/musicorum-app/telegram.git"
   },
-  "author": "",
-  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "signale": "^1.4.0",
+    "telegraf": "^4.4.1",
+    "yn": "^3.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@types/node": "^16.7.8",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.29.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0"
+  },
+  "keywords": [],
   "bugs": {
     "url": "https://github.com/musicorum-app/telegram/issues"
   },
-  "nodemonConfig": {
-    "ignore": [
-      "**/*.test.ts",
-      "**/*.spec.ts",
-      ".git",
-      "node_modules"
-    ],
-    "watch": [
-      "src"
-    ],
-    "exec": "npm start",
-    "ext": "ts"
-  },
-  "homepage": "https://github.com/musicorum-app/telegram#readme",
-  "dependencies": {
-    "@sentry/node": "^5.20.1",
-    "@types/mongoose": "^5.7.34",
-    "@types/node-fetch": "^2.5.7",
-    "dotenv": "^8.2.0",
-    "mongoose": "^5.9.27",
-    "node-fetch": "^2.6.1",
-    "telegraf": "^3.38.0",
-    "telegraf-inline-menu": "^4.0.1",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "@types/node": "^14.0.27",
-    "eslint": "^7.6.0",
-    "eslint-plugin-import": "^2.22.0",
-    "nodemon": "^2.0.4",
-    "standard": "^14.3.3",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
-  }
+  "homepage": "https://github.com/musicorum-app/telegram#readme"
 }
