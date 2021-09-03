@@ -1,24 +1,41 @@
+import { Sequelize, DataTypes } from 'sequelize'
 import { Signale } from 'signale'
-import { Scenes, Telegraf, session } from 'telegraf'
+import link from './commands/link'
 import start from './commands/start'
-import { linkingScene, linkingSceneName } from './scenes/link'
+import { linkingScene } from './scenes/link'
+import { Telegraf, Scenes, session } from 'telegraf'
+import unlink from './commands/unlink'
 
-const logger = new Signale({ scope: 'MusicorumBot' })
+export const logger = new Signale({ scope: 'MusicorumBot' })
+
+logger.info('Connecting to database')
+export const sequelize = new Sequelize(process.env.POSTGRE_URL)
+sequelize.sync().then(() => logger.info('Database has been synced'))
 
 logger.addSecrets([process.env.TELEGRAM_TOKEN])
-logger.info('Starting bot')
+
+export const User = sequelize.define('user', {
+  telegram_id: {
+    allowNull: false,
+    type: DataTypes.STRING(16),
+    primaryKey: true
+  },
+  lastfm: {
+    allowNull: false,
+    type: DataTypes.STRING(15)
+  }
+})
+
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN)
-
-// TODO: Use another session provider
-bot.use(session())
-
 const stage = new Scenes.Stage([linkingScene])
+
+bot.use(session())
 bot.use(stage.middleware())
 
-bot.start(start)
+bot.command('link', async (ctx) => await link(ctx))
+bot.command('start', (ctx) => start(ctx))
+bot.command('unlink', async (ctx) => await unlink(ctx))
 
-bot.command('link', (ctx) => ctx.scene.enter(linkingSceneName))
-
-bot.launch()
-  .then(() => logger.info('Bot running as @%s', bot.botInfo.username))
-  .catch(e => logger.error(e))
+bot.launch().then(() => {
+  logger.info(`Logged in as @${bot.botInfo.username}`)
+})
