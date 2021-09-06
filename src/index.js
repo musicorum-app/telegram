@@ -63,29 +63,31 @@ bot.action('generate', async ctx => {
   wizard.body.options.user = user.lastfm
   try {
     const req = await wizard.generate()
-    const buffer = Buffer.from(req.data.base64.replace('data:image/jpeg;base64,/', ''), 'base64')
-    const form = new FormData()
-    //  form.append('chat_id', ctx.from.id)
-    form.append('photo', buffer)
-    /* form.append('reply_markup', JSON.stringify({
-      inline_keyboard: [
-        [
-          {
-            text: 'Save this preset',
-            callback_data: '0'
-          }
-        ]
-      ]
-    })
-    ) */
+    const buffer = Buffer.from(req.data.base64.replace('data:image/jpeg;base64,', ''), 'base64')
+    // const form = new FormData()
+    // //  form.append('chat_id', ctx.from.id)
+    // form.append('photo', buffer)
+    // /* form.append('reply_markup', JSON.stringify({
+    //   inline_keyboard: [
+    //     [
+    //       {
+    //         text: 'Save this preset',
+    //         callback_data: '0'
+    //       }
+    //     ]
+    //   ]
+    // })
+    // ) */
 
-    axios.post(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendPhoto?chat_id=${ctx.chat.id}`, form, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then(r => console.log(r))
-      .catch(r => console.log(r))
+    // axios.post(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendPhoto?chat_id=${ctx.chat.id}`, form, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+    // })
+    //   .then(r => console.log(r))
+    //   .catch(r => console.log(r))
+
+    ctx.replyWithPhoto({ source: buffer })
   } catch (e) {
     ctx.editMessageText('❌ An error ocurred.')
     console.log(e)
