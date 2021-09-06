@@ -3,6 +3,21 @@ import { linkingSceneName } from '../scenes/link'
 import axios from 'axios'
 
 const link = async (ctx) => {
+  if (ctx.chat.type !== 'private') {
+    return ctx.reply('Ooops! You can\'t use this command here.', {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Open private chat',
+              url: 'https://telegram.me/' + ctx.botInfo.username
+            }
+          ]
+        ]
+      }
+    })
+  }
+
   const args = ctx.message.text.split(' ')
 
   const user = await User.findByPk(ctx.chat.id.toString())

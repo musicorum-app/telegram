@@ -1,6 +1,21 @@
 import { User } from '..'
 
 const unlink = async (ctx) => {
+  if (ctx.chat.type !== 'private') {
+    return ctx.reply('Ooops! You can\'t use this command here.', {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Open private chat',
+              url: 'https://telegram.me/' + ctx.botInfo.username
+            }
+          ]
+        ]
+      }
+    })
+  }
+
   const user = await User.findByPk(ctx.chat.id.toString())
   if (!user) {
     return ctx.replyWithMarkdown('You haven\'t registered yourself yet. Use /link to do so.')
