@@ -1,24 +1,23 @@
 import axios from 'axios'
-import { logger } from '..'
+import strings from '../strings.json'
 
 export default class GeneratorWizard {
-  constructor(theme) {
+  constructor (theme) {
     this.body = {
       options: {
+        story: false,
         messages: {}
-      }
+      },
+      source: process.env.SOURCE
     }
     this.theme = theme
   }
 
-  // TODO someone fix this method pls
-  async generate() {
+  async generate () {
     this.body.theme = this.theme
-    this.body.options.messages.title = 'MOST LISTENED' + this.body.options.period.toUpperCase()
-    this.body.options.messages.subtitle = 'all my friends are witches'
-    this.body.options.messages.scrobbles = ['scrobbles', '30 days']
-    this.body.options.story = false
-    this.body.source = 'telegram-dev'
+    this.body.options.messages.title = strings.themes.duotone.titles[this.body.options.top]
+    this.body.options.messages.subtitle = strings.themes.duotone.periods[this.body.options.period]
+    this.body.options.messages.scrobbles = ['scrobbles', strings.themes.duotone.periods[this.body.options.period]]
     return axios.post('https://generator.musicorumapp.com/generate', this.body)
   }
 }

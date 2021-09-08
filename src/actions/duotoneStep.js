@@ -17,8 +17,8 @@ const duotoneStepTop = (ctx) => {
             callback_data: 'tracks'
           },
           {
-            text: 'Top Albuns',
-            callback_data: 'albuns'
+            text: 'Top Albums',
+            callback_data: 'albums'
           }
         ],
         [
@@ -111,7 +111,7 @@ const duotoneStepPalette = (ctx) => {
           },
           {
             text: 'Sea',
-            callback_data: 'Sea'
+            callback_data: 'sea'
           }
         ],
         [
@@ -127,7 +127,7 @@ const duotoneStepPalette = (ctx) => {
 
 const duotoneStepConfirm = (ctx) => {
   wizards[ctx.from.id].body.options.pallete = ctx.match[0]
-  ctx.editMessageText('🎨 Duotone Wizard\nReady to generate!\nStories Mode: Off', {
+  ctx.editMessageText('🎨 Duotone Wizard\nReady to generate!\nStories Mode: ❌', {
     reply_markup: {
       inline_keyboard: [
         [
@@ -139,7 +139,7 @@ const duotoneStepConfirm = (ctx) => {
         [
           {
             text: 'Toggle Stories Mode',
-            callback_data: 'story-on'
+            callback_data: 'stories_mode'
           }
         ]
       ]

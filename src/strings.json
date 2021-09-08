@@ -1,0 +1,36 @@
+{
+    "themes": {
+        "duotone": {
+            "titles": {
+                "artists": "MOST LISTENED ARTISTS",
+                "albums": "MOST LISTENED ALBUMS",
+                "tracks": "MOST LISTENED TRACKS"
+            },
+            "periods": {
+                "7day": "last 7 days",
+                "1month": "last 30 days",
+                "3month": "last 3 months",
+                "6month": "last 6 months",
+                "12month": "last year",
+                "overall": "overall"
+            },
+            "palette": "Palette"
+        },
+        "grid": {
+            "takeLonger": "will take longer",
+            "size": "Grid size",
+            "showNames": "Show names",
+            "showPlaycount": "Show playcount"
+        },
+        "tops": {
+            "scrobbles": {
+                "7day": "SCROBBLES LAST WEEK",
+                "1month": "SCROBBLES LAST MONTH",
+                "3month": "SCROBBLES LAST 3 MONTHS",
+                "6month": "SCROBBLES LAST 6 MONTHS",
+                "12month": "SCROBBLES LAST YEAR",
+                "overall": "SCROBBLES ALL THE TIME"
+            }
+        }
+    }
+}
