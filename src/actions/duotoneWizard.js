@@ -33,7 +33,11 @@ const duotoneStepTop = (ctx) => {
 }
 
 const duotoneStepPeriod = (ctx) => {
-  wizards[ctx.from.id].body.options.top = ctx.match[0]
+  if (!wizards[ctx.from.id]) return reject(ctx)
+  if (ctx.match[0] !== 'back') {
+    wizards[ctx.from.id].body.options.top = ctx.match[0]
+  }
+  wizards[ctx.from.id].step++
   ctx.editMessageText('🎨 Duotone Wizard [Step 2/3]\nChoose a period', {
     reply_markup: {
       inline_keyboard: [
@@ -77,7 +81,11 @@ const duotoneStepPeriod = (ctx) => {
 }
 
 const duotoneStepPalette = (ctx) => {
-  wizards[ctx.from.id].body.options.period = ctx.match[0]
+  if (!wizards[ctx.from.id]) return reject(ctx)
+  if (ctx.match[0] !== 'back') {
+    wizards[ctx.from.id].body.options.period = ctx.match[0]
+  }
+  wizards[ctx.from.id].step++
 
   ctx.editMessageText('🎨 Duotone Wizard [Step 3/3]\nChoose a color palette', {
     reply_markup: {
@@ -126,14 +134,23 @@ const duotoneStepPalette = (ctx) => {
 }
 
 const duotoneStepConfirm = (ctx) => {
-  wizards[ctx.from.id].body.options.pallete = ctx.match[0]
-  ctx.editMessageText('🎨 Duotone Wizard\nReady to generate!\nStories Mode: ❌', {
+  if (!wizards[ctx.from.id]) return reject(ctx)
+  const w = wizards[ctx.from.id]
+  if (ctx.match[0] !== 'back') {
+    wizards[ctx.from.id].body.options.pallete = ctx.match[0]
+  }
+  w.step++
+  ctx.editMessageText(`🎨 Duotone Wizard\nReady to generate!\nStory Mode: ❌\nPalette: ${w.body.options.pallete}\nPeriod: ${w.body.options.period}`, {
     reply_markup: {
       inline_keyboard: [
         [
           {
             text: 'Generate!',
             callback_data: 'generate'
+          },
+          {
+            text: 'Nevermind, go back',
+            callback_data: 'back'
           }
         ],
         [
@@ -145,6 +162,10 @@ const duotoneStepConfirm = (ctx) => {
       ]
     }
   })
+}
+
+const reject = (ctx) => {
+  return ctx.editMessageText('❌ Try again')
 }
 
 exports.top = duotoneStepTop

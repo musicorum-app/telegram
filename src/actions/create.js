@@ -12,7 +12,7 @@ const create = async (ctx) => {
     ctx.replyWithPhoto({ source: buffer })
   } catch (e) {
     ctx.editMessageText('❌ An error ocurred.')
-    console.log(e.data)
+    console.log(e)
   }
 }
 

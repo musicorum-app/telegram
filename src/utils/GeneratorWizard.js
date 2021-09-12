@@ -11,6 +11,7 @@ export default class GeneratorWizard {
       source: process.env.SOURCE
     }
     this.theme = theme
+    this.step = 1
   }
 
   async generate () {
