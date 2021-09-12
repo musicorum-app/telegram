@@ -3,6 +3,7 @@ import { User, wizards } from '..'
 const create = async (ctx) => {
   ctx.editMessageText('⏱️ Please hold...')
   const wizard = wizards[ctx.from.id]
+  if (!wizard) return ctx.editMessageText('❌ Try again')
   const user = await User.findByPk(ctx.from.id.toString())
 
   wizard.body.options.user = user.lastfm

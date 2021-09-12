@@ -1,5 +1,5 @@
-import { wizards } from '..'
-import GeneratorWizard from '../utils/GeneratorWizard'
+import { wizards } from '../..'
+import GeneratorWizard from '../../utils/GeneratorWizard'
 
 const duotoneStepTop = (ctx) => {
   const wizard = new GeneratorWizard('duotone')
@@ -140,7 +140,7 @@ const duotoneStepConfirm = (ctx) => {
     wizards[ctx.from.id].body.options.pallete = ctx.match[0]
   }
   w.step++
-  ctx.editMessageText(`🎨 Duotone Wizard\nReady to generate!\nStory Mode: ❌\nPalette: ${w.body.options.pallete}\nPeriod: ${w.body.options.period}`, {
+  ctx.editMessageText(`🎨 Duotone Wizard\nReady to generate!\nStory Mode: ❎\nPalette: ${w.body.options.pallete}\nPeriod: ${w.body.options.period}`, {
     reply_markup: {
       inline_keyboard: [
         [
