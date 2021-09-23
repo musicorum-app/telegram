@@ -30,7 +30,7 @@ const link = async (ctx) => {
           return ctx.reply('Invalid username. Please try again.')
         } else {
           logger.error(err)
-          return ctx.reply('An error ocurred, please try again in a few minutes.')
+          return ctx.reply('An error ocurred, please try again soon.')
         }
       })
   }
