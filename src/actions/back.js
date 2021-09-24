@@ -1,9 +1,9 @@
-import { wizards } from '..'
 import duotoneWizard from './duotone/duotoneWizard'
 import generate from '../commands/generate'
 import gridWizard from './grid/gridWizard'
 
 const back = (ctx) => {
+  const { wizards } = ctx
   const wizard = wizards[ctx.from.id]
   if (!wizard) return ctx.editMessageText('❌ Try again.')
   wizard.step--

@@ -2,7 +2,7 @@ import axios from 'axios'
 import strings from '../strings.json'
 
 export default class GeneratorWizard {
-  constructor (theme) {
+  constructor (theme, { optionsMessageFactory }) {
     this.body = {
       options: {
         story: false,
@@ -10,6 +10,7 @@ export default class GeneratorWizard {
       },
       source: process.env.SOURCE
     }
+    this.optionsMessageFactory = optionsMessageFactory || ((x) => x)
     this.theme = theme
     this.step = 1
   }
@@ -20,5 +21,9 @@ export default class GeneratorWizard {
     this.body.options.messages.subtitle = strings.themes.duotone.periods[this.body.options.period]
     this.body.options.messages.scrobbles = ['scrobbles', strings.themes.duotone.periods[this.body.options.period]]
     return axios.post('https://generator.musicorumapp.com/generate', this.body)
+  }
+
+  createMessage (...args) {
+    return this.optionsMessageFactory(...args)
   }
 }

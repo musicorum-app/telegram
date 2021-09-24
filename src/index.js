@@ -16,7 +16,7 @@ import toggleGridNames from './actions/grid/toggleGridNames'
 import toggleGridPlaycount from './actions/grid/toggleGridPlaycount'
 
 export const logger = new Signale({ scope: 'MusicorumBot' })
-export const wizards = new Map()
+const wizards = new Map()
 
 logger.info('Connecting to database')
 export const sequelize = new Sequelize(process.env.POSTGRE_URL)
@@ -41,6 +41,7 @@ const stage = new Scenes.Stage([linkingScene, gridScene])
 
 bot.use(session())
 bot.use(stage.middleware())
+bot.context.wizards = wizards
 
 bot.command('link', async (ctx) => await link(ctx))
 bot.command('start', (ctx) => start(ctx))

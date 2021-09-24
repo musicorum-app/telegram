@@ -1,9 +1,12 @@
 import GeneratorWizard from '../../utils/GeneratorWizard'
-import { wizards } from '../..'
 import { gridSceneName } from '../../scenes/gridSizeInput'
+import { Emojis } from '../../constants'
 
 const gridStepTop = (ctx) => {
-  const wizard = new GeneratorWizard('grid')
+  const { wizards } = ctx
+  const wizard = new GeneratorWizard('grid', {
+    optionsMessageFactory: createGridOptionsMessage
+  })
   wizards[ctx.from.id] = wizard
 
   ctx.editMessageText('⏹️ Grid Wizard [Step 1/3]\n\nSelect a top element to display', {
@@ -35,6 +38,7 @@ const gridStepTop = (ctx) => {
 }
 
 const gridStepSize = (ctx) => {
+  const { wizards } = ctx
   if (!wizards[ctx.from.id]) return reject(ctx)
   wizards[ctx.from.id].step++
   if (ctx.match[0] !== 'back') {
@@ -44,6 +48,7 @@ const gridStepSize = (ctx) => {
 }
 
 const gridStepPeriod = (ctx, edit = false) => {
+  const { wizards } = ctx
   if (!wizards[ctx.from.id]) return reject(ctx)
   wizards[ctx.from.id].step++
   const markup = {
@@ -93,7 +98,19 @@ const gridStepPeriod = (ctx, edit = false) => {
   }
 }
 
+const createGridOptionsMessage = ({ size, period, story, names, playcount }) => {
+  const createSwitchText = (text, value) => `${text}: ${value ? Emojis.check : Emojis.cross}\n`
+
+  return '⏹️ Grid Wizard\nReady to generate!\n' +
+  `Grid size: **${size}x${size}**\n` +
+  `Period: **${period}**\n` +
+  createSwitchText('Story Mode', story) +
+  createSwitchText('Show names', names) +
+  createSwitchText('Show playcount', playcount)
+}
+
 const gridStepConfirm = (ctx) => {
+  const { wizards } = ctx
   const w = wizards[ctx.from.id]
   if (!wizards[ctx.from.id]) return reject(ctx)
   w.step++
@@ -103,7 +120,7 @@ const gridStepConfirm = (ctx) => {
   w.body.options.names = true
   w.body.options.playcount = true
 
-  ctx.editMessageText(`⏹️ Grid Wizard\nReady to generate!\nGrid size: ${w.body.options.size}x${w.body.options.size}\nPeriod: ${w.body.options.period}\nStory Mode: ❎\nGrid names: ✅\nGrid playcount: ✅`, {
+  ctx.editMessageText(createGridOptionsMessage(w.body.options), {
     reply_markup: {
       inline_keyboard: [
         [
