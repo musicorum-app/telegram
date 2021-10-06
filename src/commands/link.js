@@ -1,6 +1,7 @@
-import { logger, User } from '../index'
+import { logger } from '../index'
 import { linkingSceneName } from '../scenes/link'
 import axios from 'axios'
+import { User } from '../database'
 
 const link = async (ctx) => {
   if (ctx.chat.type !== 'private') {

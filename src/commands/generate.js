@@ -1,10 +1,10 @@
-import { User } from '..'
+import { User } from '../database'
 
 const generate = async (ctx, edit = false) => {
   const user = await User.findByPk(ctx.from.id.toString())
 
   if (!user) {
-    return ctx.reply('You haven\'t linked your Last.fm account! Use /link to do so.')
+    return ctx.reply('You haven\'t linked your Last.fm account! Use /link to do that.')
   }
 
   const replyMarkup = {

@@ -1,4 +1,3 @@
-import { Sequelize, DataTypes } from 'sequelize'
 import { Signale } from 'signale'
 import link from './commands/link'
 import start from './commands/start'
@@ -14,27 +13,14 @@ import back from './actions/back'
 import gridStep from './actions/grid/gridWizard'
 import toggleGridNames from './actions/grid/toggleGridNames'
 import toggleGridPlaycount from './actions/grid/toggleGridPlaycount'
+import { sync } from './database'
 
 export const logger = new Signale({ scope: 'MusicorumBot' })
 const wizards = new Map()
 
-logger.info('Connecting to database')
-export const sequelize = new Sequelize(process.env.POSTGRE_URL)
-sequelize.sync().then(() => logger.info('Database has been synced'))
+sync(logger)
 
 logger.addSecrets([process.env.TELEGRAM_TOKEN])
-
-export const User = sequelize.define('user', {
-  telegram_id: {
-    allowNull: false,
-    type: DataTypes.STRING(16),
-    primaryKey: true
-  },
-  lastfm: {
-    allowNull: false,
-    type: DataTypes.STRING(15)
-  }
-})
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN)
 const stage = new Scenes.Stage([linkingScene, gridScene])

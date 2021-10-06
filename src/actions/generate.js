@@ -1,4 +1,4 @@
-import { User } from '..'
+import { User } from '../database'
 
 const create = async (ctx) => {
   ctx.editMessageText('⏱️ Please hold...')
