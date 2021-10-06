@@ -1,9 +1,11 @@
-import { wizards } from '../..'
+import { Emojis } from '../../constants'
 import GeneratorWizard from '../../utils/GeneratorWizard'
 
 const duotoneStepTop = (ctx) => {
-  const wizard = new GeneratorWizard('duotone')
-  wizards[ctx.from.id] = wizard
+  const wizard = new GeneratorWizard('duotone', {
+    optionsMessageFactory: createDuotoneOptionsMessage
+  })
+  ctx.wizards[ctx.from.id] = wizard
   ctx.editMessageText('🎨 Duotone Wizard [Step 1/3]\nChoose a top element to display', {
     reply_markup: {
       inline_keyboard: [
@@ -32,12 +34,21 @@ const duotoneStepTop = (ctx) => {
   })
 }
 
+const createDuotoneOptionsMessage = ({ pallete, period, story }) => {
+  const createSwitchText = (text, value) => `${text}: ${value ? Emojis.check : Emojis.cross}\n`
+
+  return '🎨 Duotone Wizard\nReady to generate!\n' +
+  `Palette: ${pallete}\n` +
+  `Period: ${period}\n` +
+  createSwitchText('Story Mode', story)
+}
+
 const duotoneStepPeriod = (ctx) => {
-  if (!wizards[ctx.from.id]) return reject(ctx)
+  if (!ctx.wizards[ctx.from.id]) return reject(ctx)
   if (ctx.match[0] !== 'back') {
-    wizards[ctx.from.id].body.options.top = ctx.match[0]
+    ctx.wizards[ctx.from.id].body.options.top = ctx.match[0]
   }
-  wizards[ctx.from.id].step++
+  ctx.wizards[ctx.from.id].step++
   ctx.editMessageText('🎨 Duotone Wizard [Step 2/3]\nChoose a period', {
     reply_markup: {
       inline_keyboard: [
@@ -81,11 +92,11 @@ const duotoneStepPeriod = (ctx) => {
 }
 
 const duotoneStepPalette = (ctx) => {
-  if (!wizards[ctx.from.id]) return reject(ctx)
+  if (!ctx.wizards[ctx.from.id]) return reject(ctx)
   if (ctx.match[0] !== 'back') {
-    wizards[ctx.from.id].body.options.period = ctx.match[0]
+    ctx.wizards[ctx.from.id].body.options.period = ctx.match[0]
   }
-  wizards[ctx.from.id].step++
+  ctx.wizards[ctx.from.id].step++
 
   ctx.editMessageText('🎨 Duotone Wizard [Step 3/3]\nChoose a color palette', {
     reply_markup: {
@@ -134,13 +145,13 @@ const duotoneStepPalette = (ctx) => {
 }
 
 const duotoneStepConfirm = (ctx) => {
-  if (!wizards[ctx.from.id]) return reject(ctx)
-  const w = wizards[ctx.from.id]
+  if (!ctx.wizards[ctx.from.id]) return reject(ctx)
+  const w = ctx.wizards[ctx.from.id]
   if (ctx.match[0] !== 'back') {
-    wizards[ctx.from.id].body.options.pallete = ctx.match[0]
+    ctx.wizards[ctx.from.id].body.options.pallete = ctx.match[0]
   }
   w.step++
-  ctx.editMessageText(`🎨 Duotone Wizard\nReady to generate!\nStory Mode: ❎\nPalette: ${w.body.options.pallete}\nPeriod: ${w.body.options.period}`, {
+  ctx.editMessageText(createDuotoneOptionsMessage(w.body.options), {
     reply_markup: {
       inline_keyboard: [
         [

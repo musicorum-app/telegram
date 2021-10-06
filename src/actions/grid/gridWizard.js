@@ -102,8 +102,8 @@ const createGridOptionsMessage = ({ size, period, story, names, playcount }) => 
   const createSwitchText = (text, value) => `${text}: ${value ? Emojis.check : Emojis.cross}\n`
 
   return '⏹️ Grid Wizard\nReady to generate!\n' +
-  `Grid size: **${size}x${size}**\n` +
-  `Period: **${period}**\n` +
+  `Grid size: ${size}x${size}\n` +
+  `Period: ${period}\n` +
   createSwitchText('Story Mode', story) +
   createSwitchText('Show names', names) +
   createSwitchText('Show playcount', playcount)

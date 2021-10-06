@@ -1,6 +1,7 @@
 import { Scenes } from 'telegraf'
 import axios from 'axios'
-import { logger, User } from '../index'
+import { logger } from '../index'
+import { User } from '../database'
 
 export const linkingSceneName = 'SCENE_LASTFM_LINK'
 

@@ -1,4 +1,4 @@
-import { User } from '..'
+import { User } from '../database'
 
 const unlink = async (ctx) => {
   if (ctx.chat.type !== 'private') {
@@ -18,7 +18,7 @@ const unlink = async (ctx) => {
 
   const user = await User.findByPk(ctx.chat.id.toString())
   if (!user) {
-    return ctx.replyWithMarkdown('You haven\'t registered yourself yet. Use /link to do so.')
+    return ctx.replyWithMarkdown('You haven\'t linked your lastfm account yet.')
   }
 
   User.destroy({
